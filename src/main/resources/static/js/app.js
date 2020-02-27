@@ -13,7 +13,7 @@ var app = (function(){
             });
         },
         createTable:function(data){
-            tab ="<table class='table' style='width:480px;'><thead class='thead-dark'><tr><th scope='col'>Blue print name</th><th scope='col'>Number of points</th><th scope='col'>Open</th></tr></thead><tbody>"
+            tab ="<table class='table' style='width:480px; align-content:left;'><thead class='thead-dark'><tr><th scope='col'>Blue print name</th><th scope='col'>Number of points</th><th scope='col'>Open</th></tr></thead><tbody>"
             data.forEach(function(js){
                 tab = tab+"<tr><td>"+js.name+"</td><td>"+js.points.length+"</td><td><button>Open</button></td></tr>";
             });

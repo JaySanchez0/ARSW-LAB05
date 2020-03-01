@@ -1,6 +1,9 @@
 var app = (function(){
 	var author = null;
 	var li = []
+	var getSum = function(total,i){
+		return total+i.numberpoints;
+	};
 	var getBlueprintsByAuthor = function(error,data){
 		var li = data.map(function(x){
 			return {nombre:x.name,numberpoints:x.points.length};
@@ -10,7 +13,8 @@ var app = (function(){
 			return;
 		}
 		$("#AuthorName").text("Author "+author);
-		$("#result").html(loadTable(li));
+		var total = li.reduce(getSum,0);
+		$("#result").html(loadTable(li)+"<br/><h1>Total: "+total+"</h1>");
 	};
 	var loadTable=function(data){
 		var tab = "<table class='table'><tr class='row'><td>Name</td><td>points</td></tr>";

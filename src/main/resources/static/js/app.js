@@ -23,9 +23,6 @@ var app = (function(){
     	updatePlane:function(authorName){
     		app.setName(authorName);
     		var blueprint = apimock.getBlueprintsByAuthor(authorName,getBlueprintsByAuthor);
-    		if(blueprint!=null){
-    			return blueprint.size();
-    		}
     	},
     	setName:function(name){
     		author=name;

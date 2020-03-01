@@ -33,6 +33,39 @@ var apimock = (function () {
             ]
         }
     ];
+	mockdata["David"] = [{
+        author: "David",
+        name: "DavidParadice",
+        points: [
+            {
+                x: 15,
+                y: 20
+            },
+            {
+                x: 15,
+                y: 2
+            },
+            {
+                x: 450,
+                y: 13
+            }
+        ]
+    },
+    {
+        author: "David",
+        name: "bikesDavid",
+        points: [
+            {
+                x: 0,
+                y: 5
+            },
+            {
+                x: 50,
+                y: 45
+            }
+        ]
+    }
+];
     mockdata['LexLuthor'] = [
         {
             author: 'LexLuthor',

@@ -1,9 +1,6 @@
 var apimock = (function () {
-​
-    var mockdata = [];
-​
-    mockdata["JhonConnor"] = [
-        {
+	var mockdata = [];
+	mockdata["JhonConnor"] = [{
             author: "JhonConnor",
             name: "house",
             points: [
@@ -35,13 +32,12 @@ var apimock = (function () {
                 }
             ]
         }
-    ]
-​
+    ];
     mockdata['LexLuthor'] = [
         {
             author: 'LexLuthor',
             name: 'kryptonite',
-            points: [
+            points:[
                 {
                     x: 60,
                     y: 65
@@ -52,13 +48,11 @@ var apimock = (function () {
                 }
             ]
         }
-    ]
-​
+    ];
     return {
         getBlueprintsByAuthor: function(author, callback) {
             callback(null, mockdata[author]);
         },
-​
         getBlueprintsByNameAndAuthor: function(name, author, callback) {
             blueprint = mockdata[author].find(function(blueprint) {
                 return blueprint.name == name
@@ -66,5 +60,4 @@ var apimock = (function () {
             callback(null, blueprint)
         }
     }
-​
 })();

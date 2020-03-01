@@ -1,30 +1,29 @@
 var app = (function(){
+	var author = null;
+	var li = []
+	var getBlueprintsByAuthor = function(error,data){
+		var li = data.map(function(x){
+			return {nombre:x.name,numberpoints:x.points.length};
+		});
+		if(error!=null){
+			Console.log("unvalid");
+			return null;
+		}
+		$("#result").html(loadTable(li));
+	};
+	var loadTable=function(data){
+		var tab = "<table class='table'><tr class='row'><td>Name</td><td>points</td></tr>";
+		data.forEach(function(obj){
+			tab=tab+"<tr class='row'><td>"+obj.nombre+"</td><td>"+obj.numberpoints+"</td><td><button class='btn btn-primary'>Open</button></td></tr>"
+		});
+		return tab+"</table>"
+	}
     return {
-    getBlueprintByAuthor:function(){
-            var autor = document.getElementById("autor").value;
-            console.log("entro");
-            $.get({
-            url:"/blueprints/"+autor,
-            success:function(data){
-                console.log(data);
-                document.getElementById("AuthorName").innerHTML = "Author "+autor;
-                app.createTable(data);
-            }
-            });
-        },
-        createTable:function(data){
-            tab ="<table class='table' style='width:480px; align-content:left;'><thead class='thead-dark'><tr><th scope='col'>Blue print name</th><th scope='col'>Number of points</th><th scope='col'>Open</th></tr></thead><tbody>"
-            data.forEach(function(js){
-                tab = tab+"<tr><td>"+js.name+"</td><td>"+js.points.length+"</td><td><button>Open</button></td></tr>";
-            });
-            tab = tab+"</tbody></table>"
-            document.getElementById("result").innerHTML = tab;
-        },
-        updatePlanesByAuthor:function(){
-            apimock.getBlueprintsByAuthor()
-        },
-        updatePlane:function(a,b){
-
-        }
+    	updatePlane:function(author){
+    		var blueprint = apimock.getBlueprintsByAuthor(author,getBlueprintsByAuthor);
+    		if(blueprint!=null){
+    			return blueprint.size();
+    		}
+    	}
     };
  })();

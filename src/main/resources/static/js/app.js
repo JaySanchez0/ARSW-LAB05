@@ -27,7 +27,7 @@ var app = (function(){
     			return blueprint.size();
     		}
     	},
-    	setName=function(name){
+    	setName:function(name){
     		author=name;
     	}
     };

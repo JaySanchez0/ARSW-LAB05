@@ -7,8 +7,9 @@ var app = (function(){
 		});
 		if(error!=null){
 			Console.log("unvalid");
-			return null;
+			return;
 		}
+		$("#AuthorName").text("Author "+author);
 		$("#result").html(loadTable(li));
 	};
 	var loadTable=function(data){
@@ -19,11 +20,15 @@ var app = (function(){
 		return tab+"</table>"
 	}
     return {
-    	updatePlane:function(author){
-    		var blueprint = apimock.getBlueprintsByAuthor(author,getBlueprintsByAuthor);
+    	updatePlane:function(authorName){
+    		app.setName(authorName);
+    		var blueprint = apimock.getBlueprintsByAuthor(authorName,getBlueprintsByAuthor);
     		if(blueprint!=null){
     			return blueprint.size();
     		}
+    	},
+    	setName=function(name){
+    		author=name;
     	}
     };
  })();

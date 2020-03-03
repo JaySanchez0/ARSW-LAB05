@@ -14,20 +14,51 @@ var app = (function(){
 		}
 		$("#AuthorName").text("Author "+author);
 		var total = li.reduce(getSum,0);
-		$("#result").html(loadTable(li)+"<br/><h1>Total: "+total+"</h1>");
+		$("#result").html("");
+		$("#result").append(loadTable(li));
 	};
 	var loadTable=function(data){
-		var tab = "<table class='table'><tr class='row'><td>Name</td><td>points</td></tr>";
+		var tab = $("<table class='table' />");
+		tab.append($("<tr class='row'><td>Name</td><td>points</td></tr>"));
 		data.forEach(function(obj){
-			tab=tab+"<tr class='row'><td>"+obj.nombre+"</td><td>"+obj.numberpoints+"</td><td><button class='btn btn-primary'>Open</button></td></tr>"
+			var tr = $("<tr class='row' name='"+obj.nombre+"'></tr>");
+			tr.append("<tr class='row'><td>"+obj.nombre+"</td>");
+			tr.append("<td>"+obj.numberpoints+"</td>");
+			var td = $("<td class='row' />");
+			var but = $("<button class='btn btn-primary' name='"+obj.nombre+"'>Open</button>")
+			but.click(function(e){
+				var dat = $(this).attr("name");
+				console.log(dat+" AUTHOR "+author);
+				console.log($(this));
+				app.getBlueprintsByNameAndAuthor(author,dat);
+			});
+			td.append(but);
+			tr.append(td);
+			tab.append(tr);
 		});
-		return tab+"</table>"
+		return tab;
 	}
+	var drawCanvas = function(error,blueprint){
+		if(error!=null) return;
+		var canvas = document.getElementById("drawer");
+		var ctx = canvas.getContext("2d");
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		var points =  blueprint.points;
+		ctx.moveTo(points[0].x,points[0].y);
+		for(var i=1;i<points.length;i++){
+			ctx.lineTo(points[i].x,points[i].y);
+			ctx.moveTo(points[i].x,points[i].y);
+		}
+		ctx.stroke();
+	};
     return {
     	updatePlane:function(authorName){
     		app.setName(authorName);
     		var blueprint = apimock.getBlueprintsByAuthor(authorName,getBlueprintsByAuthor);
     	},
+		getBlueprintsByNameAndAuthor:function(author,name){
+			apimock.getBlueprintsByNameAndAuthor(name,author,drawCanvas)
+		},
     	setName:function(name){
     		author=name;
     	}

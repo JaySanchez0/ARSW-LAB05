@@ -1,6 +1,7 @@
 var app = (function(){
 	var author = null;
 	var li = []
+	var api=apiclient;
 	var getSum = function(total,i){
 		return total+i.numberpoints;
 	};
@@ -12,14 +13,14 @@ var app = (function(){
 			Console.log("unvalid");
 			return;
 		}
-		$("#AuthorName").text("Author "+author);
+		$("#AuthorName").text(author+"'s blueprints");
 		var total = li.reduce(getSum,0);
 		$("#result").html("");
 		$("#result").append(loadTable(li));
 	};
 	var loadTable=function(data){
-		var tab = $("<table class='table' />");
-		tab.append($("<tr class='row'><td>Name</td><td>points</td></tr>"));
+		var tab = $("<table class='table'/>");
+		tab.append($("<tr class='row'><td>Name</td><td>points</td><td></td></tr>"));
 		data.forEach(function(obj){
 			var tr = $("<tr class='row' name='"+obj.nombre+"'></tr>");
 			tr.append("<tr class='row'><td>"+obj.nombre+"</td>");
@@ -28,8 +29,7 @@ var app = (function(){
 			var but = $("<button class='btn btn-primary' name='"+obj.nombre+"'>Open</button>")
 			but.click(function(e){
 				var dat = $(this).attr("name");
-				console.log(dat+" AUTHOR "+author);
-				console.log($(this));
+				//console.log(dat+" AUTHOR "+author);
 				app.getBlueprintsByNameAndAuthor(author,dat);
 			});
 			td.append(but);
@@ -40,6 +40,7 @@ var app = (function(){
 	}
 	var drawCanvas = function(error,blueprint){
 		if(error!=null) return;
+		$("#blueprint").text("current blueprint: "+blueprint.name);
 		var canvas = document.getElementById("drawer");
 		var ctx = canvas.getContext("2d");
 		ctx.beginPath();
@@ -58,11 +59,11 @@ var app = (function(){
     	updatePlane:function(authorName){
     		app.setName(authorName);
     		//var blueprint = apimock.getBlueprintsByAuthor(authorName,getBlueprintsByAuthor);
-    		var blueprint = apiclient.getBlueprintsByAuthor(authorName,getBlueprintsByAuthor);
+    		var blueprint = api.getBlueprintsByAuthor(authorName,getBlueprintsByAuthor);
     	},
 		getBlueprintsByNameAndAuthor:function(author,name){
 			//apimock.getBlueprintsByNameAndAuthor(name,author,drawCanvas);
-			apiclient.getBlueprintsByNameAndAuthor(name,author,drawCanvas);
+			api.getBlueprintsByNameAndAuthor(name,author,drawCanvas);
 		},
     	setName:function(name){
     		author=name;

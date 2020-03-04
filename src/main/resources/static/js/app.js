@@ -42,7 +42,10 @@ var app = (function(){
 		if(error!=null) return;
 		var canvas = document.getElementById("drawer");
 		var ctx = canvas.getContext("2d");
+		ctx.beginPath();
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.setTransform(1, 0, 0, 1, 0, 0);
+		ctx.restore();
 		var points =  blueprint.points;
 		ctx.moveTo(points[0].x,points[0].y);
 		for(var i=1;i<points.length;i++){
@@ -54,10 +57,12 @@ var app = (function(){
     return {
     	updatePlane:function(authorName){
     		app.setName(authorName);
-    		var blueprint = apimock.getBlueprintsByAuthor(authorName,getBlueprintsByAuthor);
+    		//var blueprint = apimock.getBlueprintsByAuthor(authorName,getBlueprintsByAuthor);
+    		var blueprint = apiclient.getBlueprintsByAuthor(authorName,getBlueprintsByAuthor);
     	},
 		getBlueprintsByNameAndAuthor:function(author,name){
-			apimock.getBlueprintsByNameAndAuthor(name,author,drawCanvas)
+			//apimock.getBlueprintsByNameAndAuthor(name,author,drawCanvas);
+			apiclient.getBlueprintsByNameAndAuthor(name,author,drawCanvas);
 		},
     	setName:function(name){
     		author=name;
